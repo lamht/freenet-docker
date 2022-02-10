@@ -30,7 +30,7 @@ USER freenet
 
 ADD release-managers.asc /release-managers.asc
 ADD ./run /freenet/run
-# ADD ./domain.conf /etc/nginx/conf.d/domain.conf
+ADD ./domain.conf /etc/nginx/conf.d/domain.conf
 
 EXPOSE 80 8888 9481
 STOPSIGNAL SIGTERM

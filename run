@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#service nginx start
+service nginx start
 
 cd /freenet
 if [ -e /freenet/data/update.sh ]
