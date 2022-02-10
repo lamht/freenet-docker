@@ -1,5 +1,4 @@
 FROM openjdk:jre-slim
-MAINTAINER Florent Daigniere <nextgens@freenetproject.org>
 
 ENV USER_ID 1000
 ENV GROUP_ID 1000
@@ -12,16 +11,29 @@ WORKDIR /freenet
 RUN apt-get update && apt-get install --no-install-recommends -y \
   gnupg2 \
   wget \
+  nginx \
+  htop \
+  curl \
+  nano \
+  net-tools \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p data && chown -R freenet:freenet /freenet
+RUN mkdir -p data && chown -R freenet:freenet /freenet \
+  && chown -R freenet:freenet /var/log/nginx \
+  && chown -R freenet:freenet /etc/nginx \
+  && chown -R freenet:freenet /run \
+  && chown -R freenet:freenet /var/lib/nginx \
+  && rm /etc/nginx/sites-enabled/default
 
 USER freenet
 
 ADD release-managers.asc /release-managers.asc
 ADD ./run /freenet/run
+# ADD ./domain.conf /etc/nginx/conf.d/domain.conf
 
-EXPOSE 8888 9481
+EXPOSE 80 8888 9481
+STOPSIGNAL SIGTERM
+
 VOLUME ["/freenet/data"]
 CMD ["/freenet/run"]
