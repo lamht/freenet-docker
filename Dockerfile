@@ -1,4 +1,4 @@
-FROM openjdk:jre-slim
+FROM openjdk:17-slim-bullseye
 
 ENV USER_ID 1000
 ENV GROUP_ID 1000
